@@ -14,7 +14,7 @@
     
     <build>
 	    <filters>
-			<filter>trec2017.properties</filter>
+			<filter>trec2018.properties</filter>
 		</filters>
 		<resources>
 			<resource>
