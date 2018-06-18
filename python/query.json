@@ -7,26 +7,24 @@
 					"multi_match": {
 						"query": "{{disease}}",
 						"fields": [
-							"title^2",
+							"title",
 							"abstract",
-							"keyword",
 							"meshTags"
 						],
-						"tie_breaker": 0.3,
+						"tie_breaker": 0.5,
 						"type": "best_fields",
-						"boost": 1
+						"boost": 1.5
 					}
 				},
 				{
 					"multi_match": {
 						"query": "{{gene}}",
 						"fields": [
-							"title^2",
+							"title",
 							"abstract",
-							"keyword",
 							"meshTags"
 						],
-						"tie_breaker": 0.3,
+						"tie_breaker": 0.5,
 						"type": "best_fields"
 					}
 				}
