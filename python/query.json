@@ -1,0 +1,36 @@
+{
+	"from":0, "size":1000,
+	"query": {
+		"bool": {
+			"must": [
+				{
+					"multi_match": {
+						"query": "{{disease}}",
+						"fields": [
+							"title^2",
+							"abstract",
+							"keyword",
+							"meshTags"
+						],
+						"tie_breaker": 0.3,
+						"type": "best_fields",
+						"boost": 1
+					}
+				},
+				{
+					"multi_match": {
+						"query": "{{gene}}",
+						"fields": [
+							"title^2",
+							"abstract",
+							"keyword",
+							"meshTags"
+						],
+						"tie_breaker": 0.3,
+						"type": "best_fields"
+					}
+				}
+			]
+		}
+	}
+}
