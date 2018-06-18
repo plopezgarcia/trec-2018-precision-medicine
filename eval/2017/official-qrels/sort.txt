@@ -1,0 +1,1 @@
+sort -k1,1 -k4,4r qrels-treceval-abstracts.2017.txt > sorted-qrels-treceval-abstracts.2017.txt
