@@ -71,9 +71,13 @@ public class PubmedXmlHandler extends DefaultHandler {
             article.docAbstract = tempVal.toString().trim();
         }
 
-        if (tag.equalsIgnoreCase("DescriptorName") &&
-            parentTag.equalsIgnoreCase("MeshHeading")) {
-            article.meshTags.add(tempVal.toString().trim());
+        if (tag.equalsIgnoreCase("PublicationType") &&
+                parentTag.equalsIgnoreCase("PublicationTypeList")) {
+            article.publicationType = tempVal.toString().trim();
+        }
+
+        if (tag.equalsIgnoreCase("Language")) {
+            article.language = tempVal.toString().trim();
         }
 
         if (tag.equalsIgnoreCase("Year") &&
@@ -81,11 +85,15 @@ public class PubmedXmlHandler extends DefaultHandler {
             article.publicationYear = tempVal.toString().trim();
         }
 
-        if (tag.equalsIgnoreCase("Month") &&
-                parentTag.equalsIgnoreCase("PubDate")) {
-            article.publicationMonth = tempVal.toString().trim();
+        if (tag.equalsIgnoreCase("DescriptorName") &&
+                parentTag.equalsIgnoreCase("MeshHeading")) {
+            article.meshTags.add(tempVal.toString().trim());
         }
 
+        if (tag.equalsIgnoreCase("Keyword") &&
+                parentTag.equalsIgnoreCase("KeywordList")) {
+            article.medlineKeywords.add(tempVal.toString().trim());
+        }
 
         if (TAG_PUBMED_ARTICLE.equalsIgnoreCase(tag)) {
             articles.add(article);

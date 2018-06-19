@@ -60,11 +60,12 @@ public class Indexing {
                             .startObject()
                             .field("pubmedId", StringEscapeUtils.escapeJson(article.pubMedId))
                             .field("title", StringEscapeUtils.escapeJson(article.docTitle))
-                            .field("publicationDate", StringEscapeUtils.escapeJson(article.publicationMonth +
-                                                             " " + StringEscapeUtils.escapeJson((article.publicationYear))))
-                            .field("publicationYear", article.getPublicationYear())
                             .field("abstract", StringEscapeUtils.escapeJson(article.docAbstract))
+                            .field("publicationType", StringEscapeUtils.escapeJson(article.publicationType))
+                            .field("language", StringEscapeUtils.escapeJson(article.language))
+                            .field("publicationYear", article.getPublicationYear())
                             .field("meshTags", article.meshTags)
+                            .field("medlineKeywords", article.medlineKeywords)
                             .endObject()
                     )
             );
