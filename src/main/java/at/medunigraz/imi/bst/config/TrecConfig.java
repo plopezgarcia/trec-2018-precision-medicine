@@ -9,11 +9,11 @@ public final class TrecConfig {
 
     /* STORAGE - ELASTICSEARCH */
 
-    public static final String INDEX_NAME = "trec";
+    public static final String INDEX_NAME = "abstracts";
     public static final String MEDLINE_TYPE = "medline";
     public static final String EXTRA_TYPE = "extra";
-    public static final String INDEX_TRIALS_NAME = "clinicaltrials";
-    public static final String TRIALS_TYPE = "clinicaltrials";
+    public static final String INDEX_TRIALS_NAME = "trials";
+    public static final String TRIALS_TYPE = "trials";
     
     public static final String ELASTIC_HOSTNAME = getString("ELASTIC_HOSTNAME");
     public static final int ELASTIC_PORT = 9300;
