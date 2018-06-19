@@ -60,13 +60,14 @@ with open(ABSTRACTS_QRELS, 'r') as f_qrel:
 
 URL = config['ELASTIC'] + config['ABSTRACTS'] + '/_search'
 HEADERS = {'Content-type': 'application/json'}
-input_topics = xml.etree.ElementTree.parse('topics2017.xml').getroot().findall('topic')
+
+INPUT_TOPICS = xml.etree.ElementTree.parse('./topics/topics'+config['TOPICS_YEAR']+'.xml').getroot().findall('topic')
 
 topics = {}
 run = {}
 run_output_file = []
 
-for t in input_topics:
+for t in INPUT_TOPICS:
 
     # Read from file
     topic = int(float(t.get('number')))
