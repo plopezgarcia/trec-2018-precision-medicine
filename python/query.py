@@ -4,7 +4,10 @@ import xml.etree.ElementTree
 import operator
 import pprint
 
-URL = 'http://trectrectrec.ddns.net:9200/trec/_search'
+with open('config.json', 'r') as f:
+    config = json.load(f)
+
+URL = config['ELASTIC'] + config['ABSTRACTS'] + '/_search'
 HEADERS = {'Content-type': 'application/json'}
 input_topics = xml.etree.ElementTree.parse('topics2017.xml').getroot().findall('topic')
 
