@@ -13,7 +13,7 @@ import pytrec_eval
 with open('config.json', 'r') as f:
     config = json.load(f)
 
-ABSTRACTS_QRELS = './test/all.2017.qrels'
+ABSTRACTS_QRELS = './gold-standard/abstracts.2017.qrels'
 # ABSTRACTS_RUNS = './test/all.2017.trec_eval'
 #
 assert os.path.exists(ABSTRACTS_QRELS)
@@ -73,7 +73,7 @@ for t in INPUT_TOPICS:
     topic = int(float(t.get('number')))
     topics[topic] = {'topic': topic,
                     'disease': t.find('disease').text,
-                    'gene': t.find('gene').text.replace('Amplification',''),
+                    'gene': t.find('gene').text,
                     'demographic': t.find('demographic').text}
 
 for topic_tuple in sorted(topics.items()):
@@ -109,8 +109,6 @@ for topic_tuple in sorted(topics.items()):
         if str(topic_num) not in run.keys():
             run[str(topic_num)] = {}
         run[str(topic_num)][hit["_id"]] = hit["_score"]
-
-    #print(run)
 
 MEASURES_AGGREGATED = {'ndcg':'', 'Rprec':'', 'P_10':''}
 
