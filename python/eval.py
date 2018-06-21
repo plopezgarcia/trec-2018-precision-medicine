@@ -40,7 +40,7 @@ def get_topics(topics_file):
                                 'disease': t.find('disease').text,
                                 'gene': t.find('gene').text,
                                 'demographic': t.find('demographic').text}
-        
+
     topics_df = pandas.DataFrame.from_dict(topics_dict, orient='index')
     topics_df  = topics_df [['topic', 'disease', 'gene', 'demographic']]
     return(topics_df)
@@ -51,29 +51,52 @@ def get_qrels(qrel_file):
         qrels = pytrec_eval.parse_qrel(f_qrel)
     return(qrels)
 
-def run(run_id, topics_df):
-    
+
+param_grid = {
+    'query_template':['variable.json'],
+    'disease_tie_breaker':[0.1,0.5],
+    'disease_boost':[1,2,5],
+    'gene_tie_breaker':[0.1,0.5],
+    'gene_boost':[1,2,5]
+}
+
+default_params = {
+    'query_template':'baseline.json',
+    'disease_tie_breaker':0.5,
+    'disease_boost':1.5,
+    'gene_tie_breaker':0.5,
+    'gene_boost':1
+}
+
+def run(topics_df, params = default_params):
+
+    run_id = "FIXME"
+
     topics_dict = topics_to_pytrec_eval(topics_df)
-    
+
     run_tuples_list = []
-    
-    print('RUN:', run_id)
-    
+
+    print('RUN:', run_id, params)
+
     for topic_tuple in sorted(topics_dict.items()):
         topic_num = topic_tuple[0]
         topic = topic_tuple[1]
-        print('TOPIC:', topic['topic'], topic['disease'], topic['gene'], topic['demographic'])
+        #print('TOPIC:', topic['topic'], topic['disease'], topic['gene'], topic['demographic'], params)
 
         # For query...
         # Fill template with query
-        with open('query.json', 'r') as myfile:
+        with open('./query-templates/' + params['query_template'], 'r') as myfile:
           query = myfile.read()  #print(data)
           query = query.replace('{{disease}}', topic['disease'])
           query = query.replace('{{gene}}', topic['gene'])
           query = query.replace('{{demographic}}', topic['demographic'])
-          #print(query)
+
+          query = query.replace('{{disease_tie_breaker}}', str(params['disease_tie_breaker']))
+          query = query.replace('{{disease_boost}}', str(params['disease_tie_breaker']))
+          query = query.replace('{{gene_tie_breaker}}', str(params['gene_tie_breaker']))
+          query = query.replace('{{gene_boost}}', str(params['gene_boost']))
+
         response = requests.post(URL, data=query, headers=HEADERS)
-        #print(response.json())
 
         rank = 1
         for hit in response.json()["hits"]["hits"]:
@@ -92,5 +115,5 @@ def evaluate(qrels, run, aggregated_measures={'ndcg':'', 'Rprec':'', 'P_10':''})
     for measure in MEASURES_AGGREGATED.keys():
         measure_all = pytrec_eval.compute_aggregated_measure(measure, [MEASURES_AGGREGATED[measure] for MEASURES_AGGREGATED in results.values()])
         MEASURES_AGGREGATED[measure] = round(measure_all, 4)
-    
-    return(MEASURES_AGGREGATED)
+
+    return(results, MEASURES_AGGREGATED)

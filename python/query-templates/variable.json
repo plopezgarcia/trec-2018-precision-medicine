@@ -11,9 +11,9 @@
 							"abstract",
 							"meshTags"
 						],
-						"tie_breaker": 0.5,
+						"tie_breaker": {{disease_tie_breaker}},
 						"type": "best_fields",
-						"boost": 1.5
+						"boost": {{disease_boost}}
 					}
 				},
 				{
@@ -24,8 +24,9 @@
 							"abstract",
 							"meshTags"
 						],
-						"tie_breaker": 0.5,
-						"type": "best_fields"
+						"tie_breaker": {{gene_tie_breaker}},
+						"type": "best_fields",
+						"boost": {{gene_boost}}
 					}
 				}
 			]

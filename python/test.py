@@ -84,7 +84,7 @@ for topic_tuple in sorted(topics.items()):
 
     # For query...
     # Fill template with query
-    with open('query.json', 'r') as myfile:
+    with open('./query-templates/variable.json', 'r') as myfile:
       query = myfile.read()  #print(data)
       query = query.replace('{{disease}}', topic['disease'])
       query = query.replace('{{gene}}', topic['gene'])

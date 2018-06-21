@@ -71,7 +71,7 @@ public class PubmedXmlHandler extends DefaultHandler {
             if (article.docAbstract == null)
                 article.docAbstract = tempVal.toString().trim();
             else
-                article.docAbstract = article.docAbstract + tempVal.toString().trim();
+                article.docAbstract = article.docAbstract + " " + tempVal.toString().trim();
         }
 
         if (tag.equalsIgnoreCase("PublicationType") &&
