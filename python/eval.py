@@ -52,13 +52,7 @@ def get_qrels(qrel_file):
     return(qrels)
 
 
-param_grid = {
-    'query_template':['variable.json'],
-    'disease_tie_breaker':[0.1,0.5],
-    'disease_boost':[1,2,5],
-    'gene_tie_breaker':[0.1,0.5],
-    'gene_boost':[1,2,5]
-}
+
 
 default_params = {
     'query_template':'baseline.json',
@@ -104,6 +98,7 @@ def run(topics_df, params = default_params):
             run_tuples_list.append(row_tuple)
             rank = rank + 1
 
+    # Return also the query
     return(pandas.DataFrame(columns=['TOPIC_NO','Q0','ID','RANK','SCORE','RUN_NAME'], data=run_tuples_list))
 
 def evaluate(qrels, run, aggregated_measures={'ndcg':'', 'Rprec':'', 'P_10':''}):
@@ -117,3 +112,29 @@ def evaluate(qrels, run, aggregated_measures={'ndcg':'', 'Rprec':'', 'P_10':''})
         MEASURES_AGGREGATED[measure] = round(measure_all, 4)
 
     return(results, MEASURES_AGGREGATED)
+
+default_params_grid = {
+    'query_template':['variable.json'],
+    'disease_tie_breaker':[0.1,0.5],
+    'disease_boost':[1,2,5],
+    'gene_tie_breaker':[0.1,0.5],
+    'gene_boost':[1,2,5]
+}
+
+def experiment(topics_df, qrels, params_grid=default_params_grid):
+    print(params_grid)
+    for qt in params_grid['query_template']:
+        for dtb in params_grid['disease_tie_breaker']:
+            for db in params_grid['disease_boost']:
+                for gtb in params_grid['gene_tie_breaker']:
+                    for gb in params_grid['gene_boost']:
+                        params = {
+                            'query_template':qt,
+                            'disease_tie_breaker':str(dtb),
+                            'disease_boost':str(db),
+                            'gene_tie_breaker':str(gtb),
+                            'gene_boost':str(gb)
+                        }
+                        run_df = run(topics_df, params)
+                        results, aggregated = evaluate(qrels, run_df)
+                        print(aggregated)
