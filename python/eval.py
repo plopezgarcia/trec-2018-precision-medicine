@@ -4,6 +4,7 @@ import pytrec_eval
 import pandas
 import requests
 import json
+import re
 
 with open('config.json', 'r') as f:
     config = json.load(f)
@@ -25,13 +26,35 @@ def get_topics(topics_file):
     topics_dict = {}
     for t in input_topics:
         topic = int(float(t.get('number')))
+        disease = t.find('disease').text
+        gene = t.find('gene').text
+        demographic = t.find('demographic').text
+        gene_list = gene.split(',')
+        gene1 = gene_list[0]
+        gene2 = ''
+        gene3 = '' 
+        if (len(gene_list)>1):
+            gene2 = gene_list[1]
+        if (len(gene_list)>2):
+            gene3 = gene_list[2]
+        if 'female' in demographic:
+            sex = 'female'
+        else:
+            sex = 'male'
+        age = re.findall('\\d+',demographic)[0]
+        
         topics_dict[topic] = {  'topic': topic,
-                                'disease': t.find('disease').text,
-                                'gene': t.find('gene').text,
-                                'demographic': t.find('demographic').text}
+                                'disease': disease,
+                                'gene': gene,
+                                'gene1': gene1,
+                                'gene2': gene2,
+                                'gene3': gene3,
+                                'sex': sex,
+                                'age': age}
 
     topics_df = pandas.DataFrame.from_dict(topics_dict, orient='index')
-    topics_df  = topics_df [['topic', 'disease', 'gene', 'demographic']]
+    topics_df  = topics_df [['topic', 'disease', 'gene',
+                             'gene1', 'gene2', 'gene3', 'sex', 'age']]
     return(topics_df)
 
 def get_qrels(qrel_file):
@@ -65,7 +88,6 @@ def run(topics_df, params = default_params):
           query = template_file.read()
           query = query.replace('{{disease}}', topic_row['disease'])
           query = query.replace('{{gene}}', topic_row['gene'])
-          query = query.replace('{{demographic}}', topic_row['demographic'])
 
           query = query.replace('{{disease_tie_breaker}}', str(params['disease_tie_breaker']))
           query = query.replace('{{disease_boost}}', str(params['disease_tie_breaker']))
