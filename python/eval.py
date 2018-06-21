@@ -19,17 +19,6 @@ def run_to_pytrec_eval(df):
         run_dict_pytrec_eval[str(row['TOPIC_NO'])][row['ID']] = row['SCORE']
     return(run_dict_pytrec_eval)
 
-def topics_to_pytrec_eval(df):
-    topics_dict_pytrec_eval = {}
-    for index, row in df.iterrows():
-        if row['topic'] not in topics_dict_pytrec_eval.keys():
-            topics_dict_pytrec_eval[row['topic']] = {}
-        topics_dict_pytrec_eval[row['topic']]['topic'] = row['topic']
-        topics_dict_pytrec_eval[row['topic']]['disease'] = row['disease']
-        topics_dict_pytrec_eval[row['topic']]['gene'] = row['gene']
-        topics_dict_pytrec_eval[row['topic']]['demographic'] = row['demographic']
-    return(topics_dict_pytrec_eval)
-
 # FIXME: Remove weird things like "amplification, etc..." which give a worse score
 def get_topics(topics_file):
     input_topics = xml.etree.ElementTree.parse(topics_file).getroot().findall('topic')
@@ -63,6 +52,39 @@ default_params = {
 }
 
 def run(topics_df, params = default_params):
+
+    run_id = "FIXME"
+    run_tuples_list = []
+
+    print('RUN:', run_id, params)
+
+    for index, topic_row in topics_df.iterrows():
+ 
+        # Fill template with query
+        with open('./query-templates/' + params['query_template'], 'r') as template_file:
+          query = template_file.read()
+          query = query.replace('{{disease}}', topic_row['disease'])
+          query = query.replace('{{gene}}', topic_row['gene'])
+          query = query.replace('{{demographic}}', topic_row['demographic'])
+
+          query = query.replace('{{disease_tie_breaker}}', str(params['disease_tie_breaker']))
+          query = query.replace('{{disease_boost}}', str(params['disease_tie_breaker']))
+          query = query.replace('{{gene_tie_breaker}}', str(params['gene_tie_breaker']))
+          query = query.replace('{{gene_boost}}', str(params['gene_boost']))
+
+        response = requests.post(URL, data=query, headers=HEADERS)
+
+        rank = 1
+        for hit in response.json()["hits"]["hits"]:
+            row_tuple = topic_row['topic'], "Q0", hit["_id"], rank, hit["_score"], run_id
+            run_tuples_list.append(row_tuple)
+            rank = rank + 1
+
+    # Return also the query
+    return(pandas.DataFrame(columns=['TOPIC_NO','Q0','ID','RANK','SCORE','RUN_NAME'], data=run_tuples_list))
+
+
+def run2(topics_df, params = default_params):
 
     run_id = "FIXME"
 
