@@ -36,7 +36,7 @@ public class MedlineTests {
 
         List<PubMedArticle> pubMedArticles = XmlPubMedArticleSet.getPubMedArticlesFromXml(TrecConfig.SAMPLE_SMALL_XML);
         System.out.println(pubMedArticles);
-        assertThat(pubMedArticles.size(), is(2));
+        assertThat(pubMedArticles.size(), is(3));
     }
 
     /*

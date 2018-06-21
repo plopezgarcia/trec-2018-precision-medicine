@@ -3,6 +3,356 @@
 <PubmedArticleSet>
   <PubmedArticle>
     <MedlineCitation Status="MEDLINE" Owner="NLM">
+      <PMID Version="1">25121597</PMID>
+      <DateCompleted>
+        <Year>2015</Year>
+        <Month>11</Month>
+        <Day>09</Day>
+      </DateCompleted>
+      <DateRevised>
+        <Year>2016</Year>
+        <Month>11</Month>
+        <Day>25</Day>
+      </DateRevised>
+      <Article PubModel="Electronic-eCollection">
+        <Journal>
+          <ISSN IssnType="Electronic">1932-6203</ISSN>
+          <JournalIssue CitedMedium="Internet">
+            <Volume>9</Volume>
+            <Issue>8</Issue>
+            <PubDate>
+              <Year>2014</Year>
+            </PubDate>
+          </JournalIssue>
+          <Title>PloS one</Title>
+          <ISOAbbreviation>PLoS ONE</ISOAbbreviation>
+        </Journal>
+        <ArticleTitle>CDK4 amplification predicts recurrence of well-differentiated liposarcoma of the abdomen.</ArticleTitle>
+        <Pagination>
+          <MedlinePgn>e99452</MedlinePgn>
+        </Pagination>
+        <ELocationID EIdType="doi" ValidYN="Y">10.1371/journal.pone.0099452</ELocationID>
+        <Abstract>
+          <AbstractText Label="BACKGROUND" NlmCategory="BACKGROUND">The absence of CDK4 amplification in liposarcomas is associated with favorable prognosis. We aimed to identify the factors associated with tumor recurrence in patients with well-differentiated (WD) and dedifferentiated (DD) liposarcomas.</AbstractText>
+          <AbstractText Label="METHODS" NlmCategory="METHODS">From 2000 to 2010, surgical resections for 101 WD and DD liposarcomas were performed. Cases in which complete surgical resections with curative intent were carried out were selected. MDM2 and CDK4 gene amplification were analyzed by quantitative real-time polymerase chain reaction (Q-PCR).</AbstractText>
+          <AbstractText Label="RESULTS" NlmCategory="RESULTS">There were 31 WD and 17 DD liposarcomas. Locoregional recurrence was observed in 11 WD and 3 DD liposarcomas. WD liposarcomas showed better patient survival compared to DD liposarcomas (P&lt;0.05). Q-PCR analysis of the liposarcomas revealed the presence of CDK4 amplification in 44 cases (91.7%) and MDM2 amplification in 46 cases (95.8%). WD liposarcomas with recurrence after surgical resection had significantly higher levels of CDK4 amplification compared to those without recurrence (P = 0.041). High level of CDK4 amplification (cases with CDK4 amplification higher than the median 7.54) was associated with poor recurrence-free survival compared to low CDK4 amplification in both univariate (P = 0.012) and multivariate analyses (P = 0.020).</AbstractText>
+          <AbstractText Label="CONCLUSIONS" NlmCategory="CONCLUSIONS">Level of CDK4 amplification determined by Q-PCR was associated with the recurrence of WD liposarcomas after surgical resection.</AbstractText>
+        </Abstract>
+        <AuthorList CompleteYN="Y">
+          <Author ValidYN="Y">
+            <LastName>Lee</LastName>
+            <ForeName>Sanghoon</ForeName>
+            <Initials>S</Initials>
+            <AffiliationInfo>
+              <Affiliation>Department of Surgery, Samsung Medical Center, Sungkyunkwan University School of Medicine, Seoul, Korea.</Affiliation>
+            </AffiliationInfo>
+          </Author>
+          <Author ValidYN="Y">
+            <LastName>Park</LastName>
+            <ForeName>Hyojun</ForeName>
+            <Initials>H</Initials>
+            <AffiliationInfo>
+              <Affiliation>Department of Surgery, Samsung Medical Center, Sungkyunkwan University School of Medicine, Seoul, Korea.</Affiliation>
+            </AffiliationInfo>
+          </Author>
+          <Author ValidYN="Y">
+            <LastName>Ha</LastName>
+            <ForeName>Sang Yun</ForeName>
+            <Initials>SY</Initials>
+            <AffiliationInfo>
+              <Affiliation>Department of Pathology, Samsung Medical Center, Sungkyunkwan University School of Medicine, Seoul, Korea.</Affiliation>
+            </AffiliationInfo>
+          </Author>
+          <Author ValidYN="Y">
+            <LastName>Paik</LastName>
+            <ForeName>Kwang Yeol</ForeName>
+            <Initials>KY</Initials>
+            <AffiliationInfo>
+              <Affiliation>Department of Surgery, The Catholic University of Korea, Yeouido St. Mary's Hospital, Seoul, Korea.</Affiliation>
+            </AffiliationInfo>
+          </Author>
+          <Author ValidYN="Y">
+            <LastName>Lee</LastName>
+            <ForeName>Seung Eun</ForeName>
+            <Initials>SE</Initials>
+            <AffiliationInfo>
+              <Affiliation>Department of Pathology, Samsung Medical Center, Sungkyunkwan University School of Medicine, Seoul, Korea.</Affiliation>
+            </AffiliationInfo>
+          </Author>
+          <Author ValidYN="Y">
+            <LastName>Kim</LastName>
+            <ForeName>Jong Man</ForeName>
+            <Initials>JM</Initials>
+            <AffiliationInfo>
+              <Affiliation>Department of Surgery, Samsung Medical Center, Sungkyunkwan University School of Medicine, Seoul, Korea.</Affiliation>
+            </AffiliationInfo>
+          </Author>
+          <Author ValidYN="Y">
+            <LastName>Park</LastName>
+            <ForeName>Jae Berm</ForeName>
+            <Initials>JB</Initials>
+            <AffiliationInfo>
+              <Affiliation>Department of Surgery, Samsung Medical Center, Sungkyunkwan University School of Medicine, Seoul, Korea.</Affiliation>
+            </AffiliationInfo>
+          </Author>
+          <Author ValidYN="Y">
+            <LastName>Kwon</LastName>
+            <ForeName>Choon Hyuck David</ForeName>
+            <Initials>CH</Initials>
+            <AffiliationInfo>
+              <Affiliation>Department of Surgery, Samsung Medical Center, Sungkyunkwan University School of Medicine, Seoul, Korea.</Affiliation>
+            </AffiliationInfo>
+          </Author>
+          <Author ValidYN="Y">
+            <LastName>Joh</LastName>
+            <ForeName>Jae-Won</ForeName>
+            <Initials>JW</Initials>
+            <AffiliationInfo>
+              <Affiliation>Department of Surgery, Samsung Medical Center, Sungkyunkwan University School of Medicine, Seoul, Korea.</Affiliation>
+            </AffiliationInfo>
+          </Author>
+          <Author ValidYN="Y">
+            <LastName>Choi</LastName>
+            <ForeName>Yoon-La</ForeName>
+            <Initials>YL</Initials>
+            <AffiliationInfo>
+              <Affiliation>Department of Pathology, Samsung Medical Center, Sungkyunkwan University School of Medicine, Seoul, Korea; SHIST, Samsung Medical Center, Sungkyunkwan University School of Medicine, Seoul, Korea.</Affiliation>
+            </AffiliationInfo>
+          </Author>
+          <Author ValidYN="Y">
+            <LastName>Kim</LastName>
+            <ForeName>Sung Joo</ForeName>
+            <Initials>SJ</Initials>
+            <AffiliationInfo>
+              <Affiliation>Department of Surgery, Samsung Medical Center, Sungkyunkwan University School of Medicine, Seoul, Korea; SHIST, Samsung Medical Center, Sungkyunkwan University School of Medicine, Seoul, Korea.</Affiliation>
+            </AffiliationInfo>
+          </Author>
+        </AuthorList>
+        <Language>eng</Language>
+        <PublicationTypeList>
+          <PublicationType UI="D016428">Journal Article</PublicationType>
+        </PublicationTypeList>
+        <ArticleDate DateType="Electronic">
+          <Year>2014</Year>
+          <Month>08</Month>
+          <Day>14</Day>
+        </ArticleDate>
+      </Article>
+      <MedlineJournalInfo>
+        <Country>United States</Country>
+        <MedlineTA>PLoS One</MedlineTA>
+        <NlmUniqueID>101285081</NlmUniqueID>
+        <ISSNLinking>1932-6203</ISSNLinking>
+      </MedlineJournalInfo>
+      <ChemicalList>
+        <Chemical>
+          <RegistryNumber>EC 2.3.2.27</RegistryNumber>
+          <NameOfSubstance UI="D051736">Proto-Oncogene Proteins c-mdm2</NameOfSubstance>
+        </Chemical>
+        <Chemical>
+          <RegistryNumber>EC 2.7.11.22</RegistryNumber>
+          <NameOfSubstance UI="D051358">Cyclin-Dependent Kinase 4</NameOfSubstance>
+        </Chemical>
+      </ChemicalList>
+      <CitationSubset>IM</CitationSubset>
+      <CommentsCorrectionsList>
+        <CommentsCorrections RefType="Cites">
+          <RefSource>Nature. 1992 Jul 2;358(6381):80-3</RefSource>
+          <PMID Version="1">1614537</PMID>
+        </CommentsCorrections>
+        <CommentsCorrections RefType="Cites">
+          <RefSource>Cancer. 1979 Feb;43(2):574-84</RefSource>
+          <PMID Version="1">421182</PMID>
+        </CommentsCorrections>
+        <CommentsCorrections RefType="Cites">
+          <RefSource>Am J Pathol. 1996 Feb;148(2):623-30</RefSource>
+          <PMID Version="1">8579124</PMID>
+        </CommentsCorrections>
+        <CommentsCorrections RefType="Cites">
+          <RefSource>Ann Surg. 1998 Sep;228(3):355-65</RefSource>
+          <PMID Version="1">9742918</PMID>
+        </CommentsCorrections>
+        <CommentsCorrections RefType="Cites">
+          <RefSource>Br J Surg. 2005 Feb;92(2):246-52</RefSource>
+          <PMID Version="1">15505870</PMID>
+        </CommentsCorrections>
+        <CommentsCorrections RefType="Cites">
+          <RefSource>Am J Clin Pathol. 2006 May;125(5):693-7</RefSource>
+          <PMID Version="1">16707369</PMID>
+        </CommentsCorrections>
+        <CommentsCorrections RefType="Cites">
+          <RefSource>Am J Surg Pathol. 2007 Oct;31(10):1476-89</RefSource>
+          <PMID Version="1">17895748</PMID>
+        </CommentsCorrections>
+        <CommentsCorrections RefType="Cites">
+          <RefSource>Int J Cancer. 2008 May 15;122(10):2233-41</RefSource>
+          <PMID Version="1">18214854</PMID>
+        </CommentsCorrections>
+        <CommentsCorrections RefType="Cites">
+          <RefSource>Nat Rev Cancer. 2009 Mar;9(3):153-66</RefSource>
+          <PMID Version="1">19238148</PMID>
+        </CommentsCorrections>
+        <CommentsCorrections RefType="Cites">
+          <RefSource>BMC Cancer. 2009;9:205</RefSource>
+          <PMID Version="1">19558664</PMID>
+        </CommentsCorrections>
+        <CommentsCorrections RefType="Cites">
+          <RefSource>Clin Cancer Res. 2009 Sep 15;15(18):5696-703</RefSource>
+          <PMID Version="1">19737942</PMID>
+        </CommentsCorrections>
+        <CommentsCorrections RefType="Cites">
+          <RefSource>J Clin Pathol. 2009 Dec;62(12):1127-35</RefSource>
+          <PMID Version="1">19946100</PMID>
+        </CommentsCorrections>
+        <CommentsCorrections RefType="Cites">
+          <RefSource>Nat Genet. 2010 Aug;42(8):715-21</RefSource>
+          <PMID Version="1">20601955</PMID>
+        </CommentsCorrections>
+        <CommentsCorrections RefType="Cites">
+          <RefSource>Drug Resist Updat. 2011 Feb;14(1):52-66</RefSource>
+          <PMID Version="1">21169051</PMID>
+        </CommentsCorrections>
+        <CommentsCorrections RefType="Cites">
+          <RefSource>Genes Chromosomes Cancer. 2011 Nov;50(11):896-907</RefSource>
+          <PMID Version="1">21910158</PMID>
+        </CommentsCorrections>
+        <CommentsCorrections RefType="Cites">
+          <RefSource>J Clin Oncol. 2013 Jun 1;31(16):2024-8</RefSource>
+          <PMID Version="1">23569312</PMID>
+        </CommentsCorrections>
+        <CommentsCorrections RefType="Cites">
+          <RefSource>Br J Cancer. 2000 Apr;82(7):1271-5</RefSource>
+          <PMID Version="1">10755400</PMID>
+        </CommentsCorrections>
+        <CommentsCorrections RefType="Cites">
+          <RefSource>Ann Diagn Pathol. 2000 Aug;4(4):252-66</RefSource>
+          <PMID Version="1">10982304</PMID>
+        </CommentsCorrections>
+        <CommentsCorrections RefType="Cites">
+          <RefSource>Virchows Arch. 2001 Aug;439(2):141-51</RefSource>
+          <PMID Version="1">11561754</PMID>
+        </CommentsCorrections>
+        <CommentsCorrections RefType="Cites">
+          <RefSource>Ann Surg. 2003 Sep;238(3):358-70; discussion 370-1</RefSource>
+          <PMID Version="1">14501502</PMID>
+        </CommentsCorrections>
+        <CommentsCorrections RefType="Cites">
+          <RefSource>Genes Chromosomes Cancer. 1994 Jun;10(2):85-94</RefSource>
+          <PMID Version="1">7520271</PMID>
+        </CommentsCorrections>
+      </CommentsCorrectionsList>
+      <MeshHeadingList>
+        <MeshHeading>
+          <DescriptorName UI="D000008" MajorTopicYN="N">Abdominal Neoplasms</DescriptorName>
+          <QualifierName UI="Q000235" MajorTopicYN="Y">genetics</QualifierName>
+          <QualifierName UI="Q000401" MajorTopicYN="N">mortality</QualifierName>
+          <QualifierName UI="Q000473" MajorTopicYN="Y">pathology</QualifierName>
+          <QualifierName UI="Q000601" MajorTopicYN="N">surgery</QualifierName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D000328" MajorTopicYN="N">Adult</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D000368" MajorTopicYN="N">Aged</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D051358" MajorTopicYN="N">Cyclin-Dependent Kinase 4</DescriptorName>
+          <QualifierName UI="Q000235" MajorTopicYN="Y">genetics</QualifierName>
+          <QualifierName UI="Q000378" MajorTopicYN="N">metabolism</QualifierName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D005260" MajorTopicYN="N">Female</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D005784" MajorTopicYN="Y">Gene Amplification</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D006801" MajorTopicYN="N">Humans</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D008080" MajorTopicYN="N">Liposarcoma</DescriptorName>
+          <QualifierName UI="Q000235" MajorTopicYN="Y">genetics</QualifierName>
+          <QualifierName UI="Q000401" MajorTopicYN="N">mortality</QualifierName>
+          <QualifierName UI="Q000473" MajorTopicYN="Y">pathology</QualifierName>
+          <QualifierName UI="Q000601" MajorTopicYN="N">surgery</QualifierName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D008297" MajorTopicYN="N">Male</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D008875" MajorTopicYN="N">Middle Aged</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D060787" MajorTopicYN="N">Neoplasm Grading</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D009362" MajorTopicYN="N">Neoplasm Metastasis</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D009364" MajorTopicYN="N">Neoplasm Recurrence, Local</DescriptorName>
+          <QualifierName UI="Q000235" MajorTopicYN="N">genetics</QualifierName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D011379" MajorTopicYN="N">Prognosis</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D051736" MajorTopicYN="N">Proto-Oncogene Proteins c-mdm2</DescriptorName>
+          <QualifierName UI="Q000235" MajorTopicYN="N">genetics</QualifierName>
+          <QualifierName UI="Q000378" MajorTopicYN="N">metabolism</QualifierName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D016896" MajorTopicYN="N">Treatment Outcome</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D047368" MajorTopicYN="N">Tumor Burden</DescriptorName>
+        </MeshHeading>
+      </MeshHeadingList>
+    </MedlineCitation>
+    <PubmedData>
+      <History>
+        <PubMedPubDate PubStatus="received">
+          <Year>2014</Year>
+          <Month>03</Month>
+          <Day>12</Day>
+        </PubMedPubDate>
+        <PubMedPubDate PubStatus="accepted">
+          <Year>2014</Year>
+          <Month>05</Month>
+          <Day>14</Day>
+        </PubMedPubDate>
+        <PubMedPubDate PubStatus="entrez">
+          <Year>2014</Year>
+          <Month>8</Month>
+          <Day>15</Day>
+          <Hour>6</Hour>
+          <Minute>0</Minute>
+        </PubMedPubDate>
+        <PubMedPubDate PubStatus="pubmed">
+          <Year>2014</Year>
+          <Month>8</Month>
+          <Day>15</Day>
+          <Hour>6</Hour>
+          <Minute>0</Minute>
+        </PubMedPubDate>
+        <PubMedPubDate PubStatus="medline">
+          <Year>2015</Year>
+          <Month>11</Month>
+          <Day>10</Day>
+          <Hour>6</Hour>
+          <Minute>0</Minute>
+        </PubMedPubDate>
+      </History>
+      <PublicationStatus>epublish</PublicationStatus>
+      <ArticleIdList>
+        <ArticleId IdType="pubmed">25121597</ArticleId>
+        <ArticleId IdType="doi">10.1371/journal.pone.0099452</ArticleId>
+        <ArticleId IdType="pii">PONE-D-14-10767</ArticleId>
+        <ArticleId IdType="pmc">PMC4133208</ArticleId>
+      </ArticleIdList>
+    </PubmedData>
+  </PubmedArticle>
+  <PubmedArticle>
+    <MedlineCitation Status="MEDLINE" Owner="NLM">
       <PMID Version="1">25864180</PMID>
       <DateCreated>
         <Year>2015</Year>

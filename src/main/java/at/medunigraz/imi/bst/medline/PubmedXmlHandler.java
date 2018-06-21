@@ -68,7 +68,10 @@ public class PubmedXmlHandler extends DefaultHandler {
 
         if (tag.equalsIgnoreCase(TAG_ABSTRACT_TEXT) &&
             parentTag.equalsIgnoreCase(TAG_ABSTRACT)) {
-            article.docAbstract = tempVal.toString().trim();
+            if (article.docAbstract == null)
+                article.docAbstract = tempVal.toString().trim();
+            else
+                article.docAbstract = article.docAbstract + tempVal.toString().trim();
         }
 
         if (tag.equalsIgnoreCase("PublicationType") &&
