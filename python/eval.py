@@ -4,7 +4,9 @@ import pytrec_eval
 import pandas
 import requests
 import json
+from sklearn.model_selection import train_test_split
 import re
+
 
 with open('config.json', 'r') as f:
     config = json.load(f)
@@ -79,11 +81,11 @@ def run(topics_df, params = default_params):
     run_id = "FIXME"
     run_tuples_list = []
 
-    print('RUN:', run_id, params)
+    print('RUN:', run_id, "TOPICS:", len(topics_df), params)
 
     for index, topic_row in topics_df.iterrows():
  
-        print("TOPIC:", topic_row['topic'])
+        #print("TOPIC:", topic_row['topic'])
         # Fill template with query
         with open('./query-templates/' + params['query_template'], 'r') as template_file:
           query = template_file.read()
@@ -185,7 +187,13 @@ def experiment(topics_df, qrels, params_grid=default_params_grid):
                         results, aggregated = evaluate(qrels, run_df)
                         print(aggregated)
 
-def split_qrels(qrels, topics_train, topics_test):
-    qrels_train = {key: qrels[str(key)] for key in topics_train['topic']}
-    qrels_test = {key: qrels[str(key)] for key in topics_test['topic']}
-    return(qrels_train, qrels_test)
+def split_topics(topics_df, train_split=0.6, test_split=0.5):
+    topics_train, topics_test_dev = train_test_split(topics_df, test_size=train_split)
+    topics_test, topics_dev = train_test_split(topics_test_dev, test_size=test_split)
+    return(topics_train, topics_test, topics_dev)
+
+def split_qrels(qrels, topics_train, topics_test, topics_dev):
+    qrels_train = {str(key): qrels[str(key)] for key in topics_train['topic']}
+    qrels_test = {str(key): qrels[str(key)] for key in topics_test['topic']}
+    qrels_dev = {str(key): qrels[str(key)] for key in topics_dev['topic']}
+    return(qrels_train, qrels_test, qrels_dev)
