@@ -83,6 +83,7 @@ def run(topics_df, params = default_params):
 
     for index, topic_row in topics_df.iterrows():
  
+        print("TOPIC:", topic_row['topic'])
         # Fill template with query
         with open('./query-templates/' + params['query_template'], 'r') as template_file:
           query = template_file.read()
@@ -101,9 +102,10 @@ def run(topics_df, params = default_params):
             row_tuple = topic_row['topic'], "Q0", hit["_id"], rank, hit["_score"], run_id
             run_tuples_list.append(row_tuple)
             rank = rank + 1
+            
+    results = pandas.DataFrame(columns=['TOPIC_NO','Q0','ID','RANK','SCORE','RUN_NAME'], data=run_tuples_list)
 
-    # Return also the query
-    return(pandas.DataFrame(columns=['TOPIC_NO','Q0','ID','RANK','SCORE','RUN_NAME'], data=run_tuples_list))
+    return(results, params)
 
 
 def run2(topics_df, params = default_params):
@@ -182,3 +184,8 @@ def experiment(topics_df, qrels, params_grid=default_params_grid):
                         run_df = run(topics_df, params)
                         results, aggregated = evaluate(qrels, run_df)
                         print(aggregated)
+
+def split_qrels(qrels, topics_train, topics_test):
+    qrels_train = {key: qrels[str(key)] for key in topics_train['topic']}
+    qrels_test = {key: qrels[str(key)] for key in topics_test['topic']}
+    return(qrels_train, qrels_test)
