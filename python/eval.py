@@ -135,46 +135,6 @@ def run(topics_df, params = default_params):
 
     return(results, params)
 
-
-def run2(topics_df, params = default_params):
-
-    run_id = "FIXME"
-
-    topics_dict = topics_to_pytrec_eval(topics_df)
-
-    run_tuples_list = []
-
-    print('RUN:', run_id, params)
-
-    for topic_tuple in sorted(topics_dict.items()):
-        topic_num = topic_tuple[0]
-        topic = topic_tuple[1]
-        #print('TOPIC:', topic['topic'], topic['disease'], topic['gene'], topic['demographic'], params)
-
-        # For query...
-        # Fill template with query
-        with open('./query-templates/' + params['query_template'], 'r') as myfile:
-          query = myfile.read()  #print(data)
-          query = query.replace('{{disease}}', topic['disease'])
-          query = query.replace('{{gene}}', topic['gene'])
-          query = query.replace('{{demographic}}', topic['demographic'])
-
-          query = query.replace('{{disease_tie_breaker}}', str(params['disease_tie_breaker']))
-          query = query.replace('{{disease_boost}}', str(params['disease_tie_breaker']))
-          query = query.replace('{{gene_tie_breaker}}', str(params['gene_tie_breaker']))
-          query = query.replace('{{gene_boost}}', str(params['gene_boost']))
-
-        response = requests.post(URL, data=query, headers=HEADERS)
-
-        rank = 1
-        for hit in response.json()["hits"]["hits"]:
-            row_tuple = topic_num, "Q0", hit["_id"], rank, hit["_score"], run_id
-            run_tuples_list.append(row_tuple)
-            rank = rank + 1
-
-    # Return also the query
-    return(pandas.DataFrame(columns=['TOPIC_NO','Q0','ID','RANK','SCORE','RUN_NAME'], data=run_tuples_list))
-
 def evaluate(qrels, run, aggregated_measures={'recall_1000':'','ndcg':'', 'Rprec':'', 'P_10':''}):
     MEASURES_AGGREGATED = aggregated_measures
 
