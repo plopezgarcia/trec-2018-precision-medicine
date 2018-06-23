@@ -34,7 +34,7 @@ def get_topics(topics_file):
         gene_list = gene.split(',')
         gene1 = gene_list[0]
         gene2 = ''
-        gene3 = '' 
+        gene3 = ''
         if (len(gene_list)>1):
             gene2 = gene_list[1]
         if (len(gene_list)>2):
@@ -44,7 +44,7 @@ def get_topics(topics_file):
         else:
             sex = 'male'
         age = re.findall('\\d+',demographic)[0]
-        
+
         topics_dict[topic] = {  'topic': topic,
                                 'disease': disease,
                                 'gene': gene,
@@ -59,12 +59,38 @@ def get_topics(topics_file):
                              'gene1', 'gene2', 'gene3', 'sex', 'age']]
     return(topics_df)
 
-def get_qrels(qrel_file):
+# QRELS
+
+def get_qrels_as_dict(qrel_file):
     assert os.path.exists(qrel_file)
     with open(qrel_file, 'r') as f_qrel:
         qrels = pytrec_eval.parse_qrel(f_qrel)
     return(qrels)
 
+def get_qrels_as_df(qrels_file):
+    qrels = get_qrels_as_dict(qrels_file)
+    qrels_tuples_list = []
+    for topic, doc_relevance in qrels.items():
+        for doc, relevance in doc_relevance.items():
+            qrels_tuples_list.append((int(topic), doc, int(relevance)))
+
+    qrels_df = pandas.DataFrame(columns=['topic','doc_id','relev'], data=qrels_tuples_list)
+    return(qrels_df.sort_values(['topic','relev'], ascending=[True, False]))
+
+def get_qrels(qrels_file):
+    return(get_qrels_as_df(qrels_file))
+
+# To test that all functions work properly, run:
+# eval.get_qrels_as_dict('./gold-standard/abstracts.2017.qrels') ==
+# eval.qrels_to_pytrec_eval(eval.get_qrels_as_df(('./gold-standard/abstracts.2017.qrels')))
+
+def qrels_to_pytrec_eval(qrels_df):
+    qrels_dict = {}
+    for index, qrel_row in qrels_df.iterrows():
+        if str(qrel_row['topic']) not in qrels_dict:
+            qrels_dict[str(qrel_row['topic'])] = {}
+        qrels_dict[str(qrel_row['topic'])][qrel_row['doc_id']] = qrel_row['relev']
+    return(qrels_dict)
 
 
 
@@ -84,7 +110,7 @@ def run(topics_df, params = default_params):
     print('RUN:', run_id, "TOPICS:", len(topics_df), params)
 
     for index, topic_row in topics_df.iterrows():
- 
+
         #print("TOPIC:", topic_row['topic'])
         # Fill template with query
         with open('./query-templates/' + params['query_template'], 'r') as template_file:
@@ -104,7 +130,7 @@ def run(topics_df, params = default_params):
             row_tuple = topic_row['topic'], "Q0", hit["_id"], rank, hit["_score"], run_id
             run_tuples_list.append(row_tuple)
             rank = rank + 1
-            
+
     results = pandas.DataFrame(columns=['TOPIC_NO','Q0','ID','RANK','SCORE','RUN_NAME'], data=run_tuples_list)
 
     return(results, params)
@@ -149,10 +175,10 @@ def run2(topics_df, params = default_params):
     # Return also the query
     return(pandas.DataFrame(columns=['TOPIC_NO','Q0','ID','RANK','SCORE','RUN_NAME'], data=run_tuples_list))
 
-def evaluate(qrels, run, aggregated_measures={'ndcg':'', 'Rprec':'', 'P_10':''}):
+def evaluate(qrels, run, aggregated_measures={'recall_1000':'','ndcg':'', 'Rprec':'', 'P_10':''}):
     MEASURES_AGGREGATED = aggregated_measures
 
-    evaluator = pytrec_eval.RelevanceEvaluator(qrels, pytrec_eval.supported_measures)
+    evaluator = pytrec_eval.RelevanceEvaluator(qrels_to_pytrec_eval(qrels), pytrec_eval.supported_measures)
     results = evaluator.evaluate(run_to_pytrec_eval(run))
 
     for measure in MEASURES_AGGREGATED.keys():
@@ -192,8 +218,11 @@ def split_topics(topics_df, train_split=0.6, test_split=0.5):
     topics_test, topics_dev = train_test_split(topics_test_dev, test_size=test_split)
     return(topics_train, topics_test, topics_dev)
 
+def qrels_of_topics(qrels, topics):
+    return(qrels[(qrels['topic'].isin(topics['topic']))])
+
 def split_qrels(qrels, topics_train, topics_test, topics_dev):
-    qrels_train = {str(key): qrels[str(key)] for key in topics_train['topic']}
-    qrels_test = {str(key): qrels[str(key)] for key in topics_test['topic']}
-    qrels_dev = {str(key): qrels[str(key)] for key in topics_dev['topic']}
-    return(qrels_train, qrels_test, qrels_dev)
+    return( qrels_of_topics(qrels, topics_train),
+            qrels_of_topics(qrels, topics_test),
+            qrels_of_topics(qrels, topics_dev))
+
