@@ -13,7 +13,7 @@
 									"meshTags"
 								],
 								"tie_breaker": 0.5,
-								"type": "best_fields",
+								"type": "phrase",
 								"boost": 1.5
 							}}
 						]
