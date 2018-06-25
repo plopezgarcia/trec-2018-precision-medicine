@@ -1,0 +1,20 @@
+{
+	"from":0, "size":1000,
+	"query": {
+		"bool": {
+			"must": [
+				{ "multi_match":
+					{ "query": "colon cancer",
+						"fields": ["title", "abstract", "meshTags"],
+						"tie_breaker": 0.5,
+						"type": "best_fields",
+						"boost": 1.5 } },
+				{	"multi_match":
+					{	"query": "KRAS (G13D), BRAF (V600E)",
+						"fields": ["title", "abstract", "meshTags"],
+						"tie_breaker": 0.5,
+						"type": "best_fields",
+						"boost": 1.5 } }
+				] }
+	}
+}

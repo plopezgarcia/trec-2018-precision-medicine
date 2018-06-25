@@ -1,4 +1,5 @@
-import os
+
+import os, sys
 import xml.etree.ElementTree
 import pytrec_eval
 import pandas
@@ -6,10 +7,9 @@ import requests
 import json
 from sklearn.model_selection import train_test_split
 import re
+from trec_utils import utils
 
-
-with open('config.json', 'r') as f:
-    config = json.load(f)
+config = utils.load_config()
 
 URL = config['ELASTIC'] + config['ABSTRACTS'] + '/_search'
 HEADERS = {'Content-type': 'application/json'}
@@ -92,8 +92,6 @@ def qrels_to_pytrec_eval(qrels_df):
         qrels_dict[str(qrel_row['topic'])][qrel_row['doc_id']] = qrel_row['relev']
     return(qrels_dict)
 
-
-
 default_params = {
     'query_template':'baseline.json',
     'disease_tie_breaker':0.5,
@@ -101,6 +99,9 @@ default_params = {
     'gene_tie_breaker':0.5,
     'gene_boost':1
 }
+
+def get_default_params():
+    return(default_params)
 
 def run(topics_df, params = default_params):
 
@@ -186,4 +187,3 @@ def split_qrels(qrels, topics_train, topics_test, topics_dev):
     return( qrels_of_topics(qrels, topics_train),
             qrels_of_topics(qrels, topics_test),
             qrels_of_topics(qrels, topics_dev))
-
