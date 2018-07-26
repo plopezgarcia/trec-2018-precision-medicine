@@ -2,6 +2,9 @@ check_pm_abstracts.pl
 check_pm_trials.pl
 trec_eval
 config.json
+.ipynb_checkpoints
+venv
+__pycache__
 
 # Lexigraph API key
 apikey.txt
