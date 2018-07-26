@@ -10,6 +10,7 @@ URL = config['ELASTIC'] + config['ABSTRACTS'] + '/_search'
 HEADERS = {'Content-type': 'application/json'}
 
 default_run_params = {
+    'run_id':'DEFAULT_RUN',
     'query_template':'baseline.json',
     'disease_tie_breaker':0.5,
     'disease_boost':1.5,
@@ -22,7 +23,7 @@ def get_default_run_params():
 
 def run(topics_df, run_params = default_run_params):
 
-    run_id = "FIXME"
+    run_id = run_params['run_id']
     run_tuples_list = []
 
     print('RUN:', run_id, "TOPICS:", len(topics_df), run_params)
@@ -60,20 +61,22 @@ def run(topics_df, run_params = default_run_params):
 
 default_params_grid = {
     'query_template':['variable.json'],
-    'disease_tie_breaker':[0.1,0.5],
-    'disease_boost':[1,2,5],
-    'gene_tie_breaker':[0.1,0.5],
-    'gene_boost':[1,2,5]
+    'disease_tie_breaker':[0.5,1],
+    'disease_boost':[1,1.5,2],
+    'gene_tie_breaker':[0.2,0.5,1],
+    'gene_boost':[0.5,1,1.5,2]
 }
 
 def experiment(topics_df, qrels_df, params_grid=default_params_grid):
-    print(params_grid)
+    print("PARAMS GRID:", params_grid)
+    run_tuples_list = []
     for qt in params_grid['query_template']:
         for dtb in params_grid['disease_tie_breaker']:
             for db in params_grid['disease_boost']:
                 for gtb in params_grid['gene_tie_breaker']:
                     for gb in params_grid['gene_boost']:
                         params = {
+                            'run_id':'-'.join([qt, str(dtb), str(db), str(gtb), str(gb)]),
                             'query_template':qt,
                             'disease_tie_breaker':str(dtb),
                             'disease_boost':str(db),
@@ -82,4 +85,13 @@ def experiment(topics_df, qrels_df, params_grid=default_params_grid):
                         }
                         run_df, run_params_df = run(topics_df, params)
                         results, aggregated = evaluation.evaluate(qrels_df, run_df)
-                        print(aggregated)
+
+                        row_tuple = aggregated['ndcg'], aggregated['P_10'], aggregated['Rprec'], \
+                                    str(dtb), str(db), str(gtb), str(gb)
+
+                        run_tuples_list.append(row_tuple)
+                        print(row_tuple)
+
+    results = pandas.DataFrame(columns=['ndcg', 'P_10', 'Rprec', 'dis_tb', 'dis_b', 'gene_tb', 'gene_b'], data=run_tuples_list)
+    print(results)
+    return(results.sort_values(['ndcg', 'P_10', 'Rprec'], ascending=[0, 0, 0]))
