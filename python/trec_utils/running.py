@@ -93,5 +93,4 @@ def experiment(topics_df, qrels_df, params_grid=default_params_grid):
                         print(row_tuple)
 
     results = pandas.DataFrame(columns=['ndcg', 'P_10', 'Rprec', 'dis_tb', 'dis_b', 'gene_tb', 'gene_b'], data=run_tuples_list)
-    print(results)
     return(results.sort_values(['ndcg', 'P_10', 'Rprec'], ascending=[0, 0, 0]))
