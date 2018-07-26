@@ -35,6 +35,8 @@ def run(topics_df, run_params = default_run_params):
           query = template_file.read()
           query = query.replace('{{disease}}', topic_row['disease'])
           query = query.replace('{{gene}}', topic_row['gene'])
+          query = query.replace('{{sex}}', topic_row['sex'])
+          query = query.replace('{{age_group}}', topic_row['age_group'])
 
           query = query.replace('{{disease_tie_breaker}}', str(run_params['disease_tie_breaker']))
           query = query.replace('{{disease_boost}}', str(run_params['disease_tie_breaker']))

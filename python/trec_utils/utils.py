@@ -10,6 +10,19 @@ def load_config():
     with open(os.path.dirname(__file__) + '/config.json', 'r') as f:
         return(json.load(f))
 
+# Converts numerical age to MeSH age groups (adapted)
+def to_age_group(years_of_age):
+    age = int(years_of_age)
+    if age < 2:
+        return('newborn')
+    if age < 12:
+        return('child')
+    if age < 18:
+        return('adolescent')
+    if age < 44:
+        return('adult')
+    return('aged')
+
 # FIXME: Remove weird things like "amplification, etc..." which give a worse score
 def get_topics(topics_file):
     input_topics = xml.etree.ElementTree.parse(topics_file).getroot().findall('topic')
@@ -40,11 +53,12 @@ def get_topics(topics_file):
                                 'gene2': gene2,
                                 'gene3': gene3,
                                 'sex': sex,
-                                'age': age}
+                                'age': age,
+                                'age_group': to_age_group(age)}
 
     topics_df = pandas.DataFrame.from_dict(topics_dict, orient='index')
     topics_df  = topics_df [['topic', 'disease', 'gene',
-                             'gene1', 'gene2', 'gene3', 'sex', 'age']]
+                             'gene1', 'gene2', 'gene3', 'sex', 'age', 'age_group']]
     return(topics_df)
 
 def get_qrels_as_dict(qrel_file):
