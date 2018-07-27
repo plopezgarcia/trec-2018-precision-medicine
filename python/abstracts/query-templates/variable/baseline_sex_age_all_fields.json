@@ -1,0 +1,63 @@
+{
+	"from":0, "size":1000,
+	"query": {
+		"bool": {
+			"must": [
+				{
+					"multi_match": {
+						"query": "{{disease}}",
+						"fields": [
+							"title",
+							"abstract",
+							"meshTags"
+						],
+						"tie_breaker": 0.5,
+						"type": "best_fields",
+						"boost": 1.5
+					}
+				},
+				{
+					"multi_match": {
+						"query": "{{gene}}",
+						"fields": [
+							"title",
+							"abstract",
+							"meshTags"
+						],
+						"tie_breaker": 0.5,
+						"type": "cross_fields",
+						"boost": 1
+					}
+				}
+			],
+			"should": [
+				{
+					"multi_match": {
+						"query": "{{sex}}",
+						"fields": [
+							"title",
+							"abstract",
+							"meshTags"
+						],
+						"tie_breaker": 0.5,
+						"type": "cross_fields",
+						"boost": 1
+					}
+				},
+				{
+					"multi_match": {
+						"query": "{{age_group}}",
+						"fields": [
+							"title",
+							"abstract",
+							"meshTags"
+						],
+						"tie_breaker": 0.5,
+						"type": "cross_fields",
+						"boost": 1
+					}
+				}
+			]
+		}
+	}
+}

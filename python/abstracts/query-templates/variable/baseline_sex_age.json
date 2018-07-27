@@ -12,7 +12,7 @@
 							"meshTags"
 						],
 						"tie_breaker": {{disease_tie_breaker}},
-						"type": "best_fields",
+						"type": "{{disease_multi_match_type}}",
 						"boost": {{disease_boost}}
 					}
 				},
@@ -25,9 +25,21 @@
 							"meshTags"
 						],
 						"tie_breaker": {{gene_tie_breaker}},
-						"type": "best_fields",
+						"type": "{{gene_multi_match_type}}",
 						"boost": {{gene_boost}}
 					}
+				}
+			],
+			"should": [
+				{
+					"match": {
+						"meshTags" : "{{sex}}"
+					}
+				},
+				{
+						"match": {
+							"meshTags" : "{{age_group}}"
+						}
 				}
 			]
 		}

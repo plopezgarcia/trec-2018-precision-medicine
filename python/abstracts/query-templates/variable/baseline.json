@@ -1,0 +1,35 @@
+{
+	"from":0, "size":1000,
+	"query": {
+		"bool": {
+			"must": [
+				{
+					"multi_match": {
+						"query": "{{disease}}",
+						"fields": [
+							"title",
+							"abstract",
+							"meshTags"
+						],
+						"tie_breaker": {{disease_tie_breaker}},
+						"type": "{{disease_multi_match_type}}",
+						"boost": {{disease_boost}}
+					}
+				},
+				{
+					"multi_match": {
+						"query": "{{gene}}",
+						"fields": [
+							"title",
+							"abstract",
+							"meshTags"
+						],
+						"tie_breaker": {{gene_tie_breaker}},
+						"type": "{{gene_multi_match_type}}",
+						"boost": {{gene_boost}}
+					}
+				}
+			]
+		}
+	}
+}
