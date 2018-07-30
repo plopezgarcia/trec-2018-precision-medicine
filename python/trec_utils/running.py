@@ -30,10 +30,7 @@ def replace_topic_dimensions(query, topic_row, topic_dimensions):
 
 def replace_run_parameters(query, run_params, run_params_replaced):
     for run_parameter in run_params_replaced:
-        if '{{'+run_parameter+'}}' not in query:
-            print('Variable tag', '{{'+run_parameter+'}}', 'not found in template, so not changed!')
-        else:
-            query = query.replace('{{'+run_parameter+'}}', str(run_params[run_parameter]))
+        query = query.replace('{{'+run_parameter+'}}', str(run_params[run_parameter]))
     return query
 
 def run(topics_df, run_params = default_run_params):
