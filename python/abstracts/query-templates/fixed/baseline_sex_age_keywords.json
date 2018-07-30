@@ -11,7 +11,7 @@
 							"abstract",
 							"meshTags"
 						],
-						"tie_breaker": 0.4,
+						"tie_breaker": 0.5,
 						"type": "best_fields",
 						"boost": 1.5
 					}
@@ -40,7 +40,20 @@
 						"match": {
 							"meshTags" : "{{age_group}}"
 						}
-				}
+				},
+				{
+						"multi_match": {
+							"query": "survival repair results",
+							"fields": [
+								"title^2",
+								"abstract",
+								"keyword",
+								"meshTags"
+							],
+							"tie_breaker": 0.3,
+							"type": "best_fields"
+						}
+					}
 			]
 		}
 	}

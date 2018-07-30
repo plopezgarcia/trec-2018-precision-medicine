@@ -23,6 +23,19 @@ default_run_params = {
 def get_default_run_params():
     return(default_run_params)
 
+def replace_topic_dimensions(query, topic_row, topic_dimensions):
+    for topic_dimension in topic_dimensions:
+        query = query.replace('{{'+topic_dimension+'}}', topic_row[topic_dimension])
+    return query
+
+def replace_run_parameters(query, run_params, run_params_replaced):
+    for run_parameter in run_params_replaced:
+        if '{{'+run_parameter+'}}' not in query:
+            print('Variable tag', '{{'+run_parameter+'}}', 'not found in template, so not changed!')
+        else:
+            query = query.replace('{{'+run_parameter+'}}', str(run_params[run_parameter]))
+    return query
+
 def run(topics_df, run_params = default_run_params):
 
     run_id = run_params['run_id']
@@ -36,19 +49,11 @@ def run(topics_df, run_params = default_run_params):
         #print("TOPIC:", topic_row['topic'])
         # Fill template with query
         with open('./query-templates/' + run_params['query_template'], 'r') as template_file:
-          query = template_file.read()
-          query = query.replace('{{disease}}', topic_row['disease'])
-          query = query.replace('{{gene}}', topic_row['gene'])
-          query = query.replace('{{sex}}', topic_row['sex'])
-          query = query.replace('{{age_group}}', topic_row['age_group'])
-
-          query = query.replace('{{disease_tie_breaker}}', str(run_params['disease_tie_breaker']))
-          query = query.replace('{{disease_multi_match_type}}', run_params['disease_multi_match_type'])
-          query = query.replace('{{disease_boost}}', str(run_params['disease_tie_breaker']))
-
-          query = query.replace('{{gene_tie_breaker}}', str(run_params['gene_tie_breaker']))
-          query = query.replace('{{gene_multi_match_type}}', run_params['gene_multi_match_type'])
-          query = query.replace('{{gene_boost}}', str(run_params['gene_boost']))
+            query = template_file.read()
+            query = replace_topic_dimensions(query, topic_row, ['disease', 'gene', 'sex', 'age_group'])
+            query = replace_run_parameters(query, run_params,
+                                            ['disease_tie_breaker','disease_multi_match_type', 'disease_boost', \
+                                            'gene_tie_breaker', 'gene_multi_match_type', 'gene_boost'])
 
         response = requests.post(URL, data=query, headers=HEADERS)
 
@@ -109,7 +114,7 @@ def experiment(topics_df, qrels_df, params_grid=default_params_grid):
                                 results, aggregated = evaluation.evaluate(qrels_df, run_df)
 
                                 row_tuple = qt, aggregated['ndcg'], aggregated['P_10'], aggregated['Rprec'], \
-                                            str(dtb), dmmt, str(db), gmmt, str(gtb), str(gb)
+                                            str(dtb), dmmt, str(db), str(gtb), gmmt, str(gb)
 
                                 run_tuples_list.append(row_tuple)
                                 print(row_tuple)
