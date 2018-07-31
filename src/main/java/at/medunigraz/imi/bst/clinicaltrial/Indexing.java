@@ -82,6 +82,7 @@ public class Indexing {
 
         for (int i = 0; i < listOfFiles.length; i++) {
             if (listOfFiles[i].isFile()) {
+                System.out.printf("READING: %d%n", i + 1);
                 clinicalTrials.add(getClinicalTrialFromFile(listOfFiles[i].getAbsolutePath()));
             }
         }

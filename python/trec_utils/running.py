@@ -7,6 +7,7 @@ from trec_utils import utils, evaluation
 config = utils.load_config()
 
 URL = config['ELASTIC'] + config['ABSTRACTS'] + '/_search'
+URL_CT = config['ELASTIC'] + config['TRIALS'] + '/_search'
 HEADERS = {'Content-type': 'application/json'}
 
 default_run_params = {
@@ -65,7 +66,37 @@ def run(topics_df, run_params = default_run_params):
 
     return(results, run_params)
 
+def run_ct(topics_df, run_params = default_run_params):
 
+    run_id = run_params['run_id']
+    run_tuples_list = []
+
+    #print('RUN:', run_id, "TOPICS:", len(topics_df), run_params)
+    print('RUN:', run_id, "TOPICS:", len(topics_df))
+
+    for index, topic_row in topics_df.iterrows():
+
+        #print("TOPIC:", topic_row['topic'])
+        # Fill template with query
+        with open('./query-templates/' + run_params['query_template'], 'r') as template_file:
+            query = template_file.read()
+            query = replace_topic_dimensions(query, topic_row, ['disease', 'gene', 'sex', 'age'])
+            query = replace_run_parameters(query, run_params,
+                                            ['disease_tie_breaker','disease_multi_match_type', 'disease_boost', \
+                                            'gene_tie_breaker', 'gene_multi_match_type', 'gene_boost'])
+
+        response = requests.post(URL_CT, data=query, headers=HEADERS)
+
+        rank = 1
+        for hit in response.json()["hits"]["hits"]:
+            row_tuple = topic_row['topic'], "Q0", hit["_id"], rank, hit["_score"], run_id, \
+                        hit["_source"]["title"]
+            run_tuples_list.append(row_tuple)
+            rank = rank + 1
+
+    results = pandas.DataFrame(columns=['TOPIC_NO','Q0','ID','RANK','SCORE','RUN_NAME', 'TITLE'], data=run_tuples_list)
+
+    return(results, run_params)
 
 default_params_grid = {
     'query_template':['variable/baseline_sex_age.json'],
