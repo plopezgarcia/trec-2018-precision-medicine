@@ -6,20 +6,9 @@ from trec_utils import utils, evaluation
 
 config = utils.load_config()
 
-URL = config['ELASTIC'] + config['ABSTRACTS'] + '/_search'
-URL_CT = config['ELASTIC'] + config['TRIALS'] + '/_search'
+URL_ABSTRACTS = config['ELASTIC'] + config['ABSTRACTS'] + '/_search'
+URL_TRIALS = config['ELASTIC'] + config['TRIALS'] + '/_search'
 HEADERS = {'Content-type': 'application/json'}
-
-default_run_params = {
-    'run_id':'DEFAULT_RUN',
-    'query_template':'baseline.json',
-    'disease_tie_breaker':0.5,
-    'disease_multi_match_type':'best_fields',
-    'disease_boost':1.5,
-    'gene_tie_breaker':0.5,
-    'gene_multi_match_type':'cross_fields',
-    'gene_boost':1
-}
 
 def get_default_run_params():
     return(default_run_params)
@@ -34,7 +23,19 @@ def replace_run_parameters(query, run_params, run_params_replaced):
         query = query.replace('{{'+run_parameter+'}}', str(run_params[run_parameter]))
     return query
 
-def run(topics_df, run_params = default_run_params):
+example_run_params = {
+    'run_id':'DEFAULT_RUN',
+    'query_template':'baseline.json',
+    'disease_tie_breaker':0.5,
+    'disease_multi_match_type':'best_fields',
+    'disease_boost':1.5,
+    'gene_tie_breaker':0.5,
+    'gene_multi_match_type':'cross_fields',
+    'gene_boost':1
+}
+
+# abstracts_or_trials: 'ABSTRACTS', 'TRIALS'
+def run(topics_df, abstracts_or_trials, run_params):
 
     run_id = run_params['run_id']
     run_tuples_list = []
@@ -48,12 +49,16 @@ def run(topics_df, run_params = default_run_params):
         # Fill template with query
         with open('./query-templates/' + run_params['query_template'], 'r') as template_file:
             query = template_file.read()
-            query = replace_topic_dimensions(query, topic_row, ['disease', 'gene', 'sex', 'age_group'])
+            query = replace_topic_dimensions(query, topic_row, ['disease', 'gene', 'gene1', 'gene2', \
+                                                                'sex', 'age', 'age_group'])
             query = replace_run_parameters(query, run_params,
                                             ['disease_tie_breaker','disease_multi_match_type', 'disease_boost', \
                                             'gene_tie_breaker', 'gene_multi_match_type', 'gene_boost'])
 
-        response = requests.post(URL, data=query, headers=HEADERS)
+        if abstracts_or_trials == 'ABSTRACTS':
+            response = requests.post(URL_ABSTRACTS, data=query, headers=HEADERS)
+        if abstracts_or_trials == 'TRIALS':
+            response = requests.post(URL_TRIALS, data=query, headers=HEADERS)
 
         rank = 1
         for hit in response.json()["hits"]["hits"]:
@@ -66,39 +71,8 @@ def run(topics_df, run_params = default_run_params):
 
     return(results, run_params)
 
-def run_ct(topics_df, run_params = default_run_params):
 
-    run_id = run_params['run_id']
-    run_tuples_list = []
-
-    #print('RUN:', run_id, "TOPICS:", len(topics_df), run_params)
-    print('RUN:', run_id, "TOPICS:", len(topics_df))
-
-    for index, topic_row in topics_df.iterrows():
-
-        #print("TOPIC:", topic_row['topic'])
-        # Fill template with query
-        with open('./query-templates/' + run_params['query_template'], 'r') as template_file:
-            query = template_file.read()
-            query = replace_topic_dimensions(query, topic_row, ['disease', 'gene', 'sex', 'age'])
-            query = replace_run_parameters(query, run_params,
-                                            ['disease_tie_breaker','disease_multi_match_type', 'disease_boost', \
-                                            'gene_tie_breaker', 'gene_multi_match_type', 'gene_boost'])
-
-        response = requests.post(URL_CT, data=query, headers=HEADERS)
-
-        rank = 1
-        for hit in response.json()["hits"]["hits"]:
-            row_tuple = topic_row['topic'], "Q0", hit["_id"], rank, hit["_score"], run_id, \
-                        hit["_source"]["title"]
-            run_tuples_list.append(row_tuple)
-            rank = rank + 1
-
-    results = pandas.DataFrame(columns=['TOPIC_NO','Q0','ID','RANK','SCORE','RUN_NAME', 'TITLE'], data=run_tuples_list)
-
-    return(results, run_params)
-
-default_params_grid = {
+example_params_grid = {
     'query_template':['variable/baseline_sex_age.json'],
     'disease_tie_breaker':[0.0,0.2,0.5,0.7,1],
     'disease_multi_match_type':['best_fields', 'most_fields', 'cross_fields', 'phrase', 'phrase_prefix'],
@@ -108,7 +82,7 @@ default_params_grid = {
     'gene_boost':[0.5,1,1.5,2]
 }
 
-def experiment(topics_df, qrels_df, params_grid=default_params_grid):
+def experiment(topics_df, qrels_df, abstracts_or_trials, params_grid):
     run_number = 1
     print("EXPERIMENT BEGIN:", str(datetime.now()))
     print("RUNS:",  len(params_grid['query_template']) * \
@@ -138,7 +112,7 @@ def experiment(topics_df, qrels_df, params_grid=default_params_grid):
                                     'gene_boost':str(gb)
                                 }
                                 print(run_number)
-                                run_df, run_params_df = run(topics_df, params)
+                                run_df, run_params_df = run(topics_df, abstracts_or_trials, params)
                                 results, aggregated = evaluation.evaluate(qrels_df, run_df)
 
                                 row_tuple = qt, aggregated['ndcg'], aggregated['P_10'], aggregated['Rprec'], \

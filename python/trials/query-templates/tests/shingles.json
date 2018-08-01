@@ -11,9 +11,9 @@
               "summary",
               "inclusion"
             ],
-            "tie_breaker": 0.3,
-            "type": "best_fields",
-            "boost": 1
+						"tie_breaker": {{disease_tie_breaker}},
+						"type": "{{disease_multi_match_type}}",
+						"boost": {{disease_boost}}
           }
         },
         {
@@ -24,18 +24,30 @@
               "summary",
               "inclusion"
             ],
-            "tie_breaker": 0.3,
-            "type": "best_fields",
-            "boost": 1
+						"tie_breaker": {{disease_tie_breaker}},
+						"type": "{{disease_multi_match_type}}",
+						"boost": {{disease_boost}}
           }
         }
       ],
-  		"must": [
+			"must": [
   			{
   				"range": {
   					"minimum_age": {
   						"lte": {{age}}
   					}
+  				}
+  			},
+  			{
+  				"range": {
+  					"maximum_age": {
+  						"gte": {{age}}
+  					}
+  				}
+  			},
+  			{
+  				"match": {
+  					"sex": "{{sex}}"
   				}
   			}
   		],
@@ -47,25 +59,32 @@
               "title.shingles",
               "summary.shingles",
               "inclusion.shingles"
-            ],
-            "tie_breaker": 0.3,
-            "type": "best_fields",
-            "boost": 2
+            ]
           }
         },
         {
           "multi_match": {
-            "query": "{{gene}}",
+            "query": "{{gene1}}",
             "fields": [
               "title.shingles",
               "summary.shingles",
               "inclusion.shingles"
-            ],
-            "tie_breaker": 0.3,
-            "type": "best_fields",
-            "boost": 2
+            ]
           }
-        }
+				},
+				{
+					"multi_match": {
+						"query": "{{gene2}}",
+						"fields": [
+							"title.shingles",
+							"summary.shingles",
+							"inclusion.shingles"
+						],
+						"tie_breaker": 0.3,
+						"type": "best_fields",
+						"boost": 1
+					}
+				}
       ]
   	}
   }
