@@ -20,7 +20,8 @@ def replace_topic_dimensions(query, topic_row, topic_dimensions):
 
 def replace_run_parameters(query, run_params, run_params_replaced):
     for run_parameter in run_params_replaced:
-        query = query.replace('{{'+run_parameter+'}}', str(run_params[run_parameter]))
+        if run_parameter in run_params:
+            query = query.replace('{{'+run_parameter+'}}', str(run_params[run_parameter]))
     return query
 
 example_run_params = {
