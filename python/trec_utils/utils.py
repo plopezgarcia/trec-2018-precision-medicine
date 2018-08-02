@@ -114,6 +114,6 @@ def split_qrels(qrels, topics_train, topics_test, topics_dev):
             qrels_of_topics(qrels, topics_dev))
 
 def to_trec_run_file(run_df, run_params):
-    run_df[['TOPIC_NO','Q0','ID','RANK','SCORE','RUN_NAME']].to_csv('submitted/'+run_params['run_id'], \
+    run_df[['TOPIC_NO','Q0','ID','RANK','SCORE','RUN_NAME']].to_csv('submitted_runs/'+run_params['run_id'], \
                                                                     sep=' ', encoding='utf-8', \
                                                                     header=False, index=False)

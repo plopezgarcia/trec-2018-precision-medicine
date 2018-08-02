@@ -55,7 +55,7 @@ def run(topics_df, abstracts_or_trials, run_params):
             query = replace_run_parameters(query, run_params,
                                             ['disease_tie_breaker','disease_multi_match_type', 'disease_boost', \
                                             'gene_tie_breaker', 'gene_multi_match_type', 'gene_boost'])
-
+        #print(query)
         if abstracts_or_trials == 'ABSTRACTS':
             response = requests.post(URL_ABSTRACTS, data=query, headers=HEADERS)
         if abstracts_or_trials == 'TRIALS':
