@@ -30,7 +30,7 @@
           }
         }
       ],
-			"must": [
+			"should": [
   			{
   				"range": {
   					"minimum_age": {
