@@ -11,9 +11,9 @@
 							"abstract",
 							"meshTags"
 						],
-						"tie_breaker": {{disease_tie_breaker}},
-						"type": "{{disease_multi_match_type}}",
-						"boost": {{disease_boost}}
+						"tie_breaker": 0.4,
+						"type": "best_fields",
+						"boost": 1.5
 					}
 				},
 				{
@@ -24,9 +24,9 @@
 							"abstract",
 							"meshTags"
 						],
-						"tie_breaker": {{gene_tie_breaker}},
-						"type": "{{gene_multi_match_type}}",
-						"boost": {{gene_boost}}
+						"tie_breaker": 0.4,
+						"type": "cross_fields",
+						"boost": 1
 					}
 				}
 			],
@@ -40,8 +40,7 @@
 							"meshTags"
 						],
 						"tie_breaker": 0.4,
-						"type": "best_fields",
-						"boost": 1.5
+						"type": "best_fields"
 					}
 				},
 				{
@@ -53,9 +52,18 @@
 							"meshTags"
 						],
 						"tie_breaker": 0.4,
-						"type": "best_fields",
-						"boost": 1.5
+						"type": "best_fields"
 					}
+				},
+				{
+						"match": {
+							"language" : "eng"
+						}
+				},
+				{
+						"match": {
+							"_type" : "extra"
+						}
 				}
 			]
 		}
