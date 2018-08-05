@@ -1,0 +1,100 @@
+{
+	"from":0, "size":1000,
+	"query": {
+  	"bool": {
+			"must_not":
+        {
+	  				"match": {
+	  					"exclusion": "{{disease}}"
+	  			}
+        },
+			"must": [
+        {
+          "multi_match": {
+            "query": "{{disease}}",
+            "fields": [
+              "title",
+              "summary",
+              "inclusion"
+            ],
+						"tie_breaker": 0.4,
+						"type": "best_fields",
+						"boost": 1.3
+          }
+        },
+        {
+          "multi_match": {
+            "query": "{{gene}}",
+            "fields": [
+              "title",
+              "summary",
+              "inclusion"
+            ],
+						"tie_breaker": 0.4,
+						"type": "best_fields",
+						"boost": 0.8
+          }
+        }
+      ],
+			"should": [
+  			{
+  				"range": {
+  					"minimum_age": {
+  						"lte": {{age}}
+  					}
+  				}
+  			},
+  			{
+  				"range": {
+  					"maximum_age": {
+  						"gte": {{age}}
+  					}
+  				}
+  			},
+  			{
+  				"match": {
+  					"sex": "{{sex}}"
+  				}
+  			}
+  		],
+			"should": [
+        {
+          "multi_match": {
+            "query": "{{disease}}",
+            "fields": [
+              "title.shingles",
+              "summary.shingles",
+              "inclusion.shingles"
+            ]
+          }
+        },
+        {
+          "multi_match": {
+            "query": "{{gene1}}",
+            "fields": [
+              "title.shingles",
+              "summary.shingles",
+              "inclusion.shingles"
+            ],
+						"tie_breaker": 0.4,
+						"type": "best_fields",
+						"boost": 1.5
+          }
+				},
+				{
+					"multi_match": {
+						"query": "{{gene2}}",
+						"fields": [
+							"title.shingles",
+							"summary.shingles",
+							"inclusion.shingles"
+						],
+						"tie_breaker": 0.3,
+						"type": "best_fields",
+						"boost": 1
+					}
+				}
+      ]
+  	}
+  }
+}
